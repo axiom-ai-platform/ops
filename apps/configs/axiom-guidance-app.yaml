@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: axcfg-guidance-api
+  namespace: argocd
+spec:
+  source:
+    repoURL: "https://github.com/axiom-ai-platform/ops.git"
+    targetRevision: "main"
+    path: "apps/configs"
+  destination:
+    name: "in-cluster"
+    namespace: "axiom-system"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: "5s"
+        factor: 2
+        maxDuration: "3m"
