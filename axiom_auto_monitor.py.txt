@@ -1,0 +1,19 @@
+
+# AXIOM 自动监控脚本
+import time
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+class AxiomAutoMonitor:
+    def __init__(self):
+        self.status = "running"
+    
+    def monitor(self):
+        while True:
+            logging.info("AXIOM 系统状态: " + self.status)
+            time.sleep(10)
+
+if __name__ == "__main__":
+    monitor = AxiomAutoMonitor()
+    monitor.monitor()
